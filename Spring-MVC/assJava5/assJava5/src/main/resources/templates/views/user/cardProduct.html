@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EC Mobile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Grocery Shoppy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <link  th:href="@{/css/bootstrap.css}"   rel="stylesheet" type="text/css" media="all" />
+    <link  th:href="@{/css/style.css}" rel="stylesheet" type="text/css" media="all" />
+    <link   th:href="@{/css/font-awesome.css}"  rel="stylesheet">
+    <!--pop-up-box-->
+    <link th:href="@{/css/popuo-box.css}" rel="stylesheet" type="text/css" media="all" />
+    <!--//pop-up-box-->
+    <!-- price range -->
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/jquery-ui1.css}" >
+    <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css" media="screen" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+
+</head>
+<body>
+<div th:replace="/views/fragment/header :: header"></div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a th:href="@{http://localhost:8080/index}">Home</a>
+                    <i>|</i>
+                </li>
+                <li>Check Out</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- checkout page -->
+<div class="privacy">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">Checkout
+            <span class="heading-style">
+					<i></i>
+					<i></i>
+					<i></i>
+				</span>
+        </h3>
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+            <h4>Your shopping cart contains:
+                <span th:text="${count} + ' Products'"> </span>
+            </h4>
+            <div class="table-responsive">
+                <table class="timetable_sub">
+                    <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Product</th>
+                        <th>Quality</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <th:block th:each="obj : ${listObj}">
+                        <tr th:class="'rem' + ${obj[0]}">
+                            <td class="invert" th:text="${obj[0]}"></td>
+                            <td class="invert-image">
+                                <a th:href="@{'http://localhost:8080/product/' + ${obj[0]}}">
+                                    <img th:src="@{${'/file/product/' + obj[1]}}" alt=" " class="img-responsive">
+                                </a>
+                            </td>
+
+                            <td class="invert">
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <div th:onclick="'updateMinusQuantity(' + ${obj[5]} + ')'"  class="entry value-minus"></div>
+                                        <div class="entry value" th:id="${obj[5]}"  th:text="${obj[2]}"></div>
+                                        <div th:onclick="'updatePlusQuantity(' + ${obj[5]} + ')'"   class="entry value-plus active" ></div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td hidden th:text="${obj[6]}" th:id="'price' + ${obj[5]}"></td>
+                            <td hidden th:text="${obj[7]}" th:id="'priceQuantity' + ${obj[5]}"></td>
+                            <td class="invert" th:text="${obj[3]}"></td>
+                            <td class="invert" th:id="'id' + ${obj[5]}" th:text=" '$' + ${obj[4]}"></td>
+                            <td class="invert">
+                                <div class="rem">
+                                    <div th:class="'close' + ${obj[0]}">
+                                        <button class="btn-primary" th:onclick="'deleteCard(' + ${obj[5]} + ')'" >Delete</button>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+<!--        information customer-->
+        <div class="checkout-left">
+            <div class="address_form_agile">
+                <h4>Add a new Details</h4>
+                <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                        <div class="information-wrapper">
+                            <div class="first-row">
+                                <input type="text" hidden id="customer" th:value="${customer.id}">
+                                <input id="statusMoney" hidden type="text" value="0">
+                                <input id="statusShip" hidden type="text" value="0">
+                                <div class="controls">
+                                    <input class="billing-address-name" type="text" th:value="${customer.fullname}" name="name" placeholder="Full Name" required="">
+                                </div>
+                                <div class="w3_agileits_card_number_grids">
+                                    <div class="w3_agileits_card_number_grid_left">
+                                        <div class="controls">
+                                            <input type="text" placeholder="Mobile Number" th:value="${customer.phone}" name="number" required="">
+                                        </div>
+                                    </div>
+
+                                    <div class="clear"> </div>
+                                </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="Town/City" id="address" required="">
+                                </div>
+                            </div>
+                            <button id="submitBtn" class="submit check_out" th:if="${count} > 0">Delivery to this Address</button>
+                        </div>
+                    </div>
+
+                <div class="checkout-right-basket" th:if="${count} > 0">
+                    <a href="payment.html">Make a Payment
+                        <span class="fa fa-hand-o-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!-- //checkout page -->
+
+<div th:replace="/views/fragment/footer :: footer"></div>
+
+<!-- js-files -->
+<!-- jquery -->
+<script th:src="@{js/jquery-2.1.4.min.js}"></script>
+<!-- //jquery -->
+
+<!-- popup modal (for signin & signup)-->
+<script th:src="@{/js/jquery.magnific-popup.js}"></script>
+<script>
+    $(document).ready(function () {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+            fixedContentPos: false,
+            fixedBgPos: true,
+            overflowY: 'auto',
+            closeBtnInside: true,
+            preloader: false,
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+    });
+</script>
+<!-- Large modal -->
+<!-- <script>
+    $('#').modal('show');
+</script> -->
+<!-- //popup modal (for signin & signup)-->
+
+<!-- cart-js -->
+<script th:src="@{/js/minicart.js}"></script>
+<script>
+    $('#submitBtn').click(function () {
+        var formData = {
+            'statusMoney' : $('#statusMoney').val(),
+            'statusShip' : $('#statusShip').val(),
+            'address' : $('#address').val()
+        };
+
+        $.ajax({
+            url: 'http://localhost:8080/order',
+            type : 'POST',
+            data : formData
+
+        }).then(function (data) {
+
+        }).fail(function (error) {
+            alert("Đặt hàng thành công");
+        });
+
+    });
+
+</script>
+<script>
+    paypalm.minicartk.render(); //use only unique class names other than paypal1.minicart1.Also Replace same class name in css and minicart.min.js
+
+    paypalm.minicartk.cart.on('checkout', function (evt) {
+        var items = this.items(),
+            len = items.length,
+            total = 0,
+            i;
+
+        // Count the number of each item in the cart
+        for (i = 0; i < len; i++) {
+            total += items[i].get('quantity');
+        }
+
+        if (total < 3) {
+            alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+            evt.preventDefault();
+        }
+    });
+</script>
+<!-- //cart-js -->
+
+<!--quantity-->
+<script>
+    $('.value-plus').on('click', function () {
+        var divUpd = $(this).parent().find('.value'),
+            newVal = parseInt(divUpd.text(), 10) + 1;
+        divUpd.text(newVal);
+    });
+
+    $('.value-minus').on('click', function () {
+        var divUpd = $(this).parent().find('.value'),
+            newVal = parseInt(divUpd.text(), 10) - 1;
+        if (newVal >= 1) divUpd.text(newVal);
+    });
+</script>
+<!--quantity-->
+
+<script>
+    function updatePlusQuantity(id) {
+        var a = parseInt(document.getElementById(id).innerHTML, 10) + 1;
+        var maxQuantity = parseInt(document.getElementById( "priceQuantity" + id).innerHTML, 10);
+
+        if(a >= maxQuantity){
+            document.getElementById(id).innerHTML = maxQuantity;
+            a = maxQuantity;
+        }
+        var td = parseInt(document.getElementById("price" + id).innerHTML, 10);
+        var tich = td * a;
+        document.getElementById("id" + id).innerHTML = '$' + tich;
+        $.ajax({
+            url: 'http://localhost:8080/card/update/'+id +'?quantity=' +a + '&price='+tich
+        }).then(function (data) {
+
+        }).fail(function (error) {
+
+        });
+    }
+</script>
+
+<script>
+    function updateMinusQuantity(id) {
+        var a = parseInt(document.getElementById(id).innerHTML, 10) - 1;
+        if(a == 0){
+            a = 1;
+        }
+        var td = parseInt(document.getElementById("price" + id).innerHTML, 10);
+        var tich = td * a;
+        document.getElementById("id" + id).innerHTML = '$' + tich;
+        $.ajax({
+            url: 'http://localhost:8080/card/update/'+id +'?quantity=' +a + '&price='+tich
+        }).then(function (data) {
+
+        }).fail(function (error) {
+
+        });
+    }
+</script>
+
+
+
+<!--//quantity-->
+<th:block th:each="obj : ${listObj}">
+    <script th:inline="javascript">
+        $(document).ready(function (c) {
+            $('.' + 'close' + [(${obj[0]})]).on('click', function (c) {
+                $('.' + 'rem' + [(${obj[0]})]).fadeOut('slow', function (c) {
+                    $('.' + 'rem' + [(${obj[0]})]).remove();
+                });
+            });
+        });
+    </script>
+
+
+</th:block>
+
+<script>
+    function deleteCard(id) {
+        $.ajax({
+            url: 'http://localhost:8080/card/delete/'+id
+        }).then(function (data) {
+
+        }).fail(function (error) {
+
+        });
+    };
+</script>
+<!-- password-script -->
+<script>
+    window.onload = function () {
+        document.getElementById("password1").onchange = validatePassword;
+        document.getElementById("password2").onchange = validatePassword;
+    }
+    function validatePassword() {
+        var pass2 = document.getElementById("password2").value;
+        var pass1 = document.getElementById("password1").value;
+        if (pass1 != pass2)
+            document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+        else
+            document.getElementById("password2").setCustomValidity('');
+        //empty string means no validation error
+    }
+</script>
+<!-- //password-script -->
+
+<!-- smoothscroll -->
+<script th:src="@{/js/SmoothScroll.min.js}"></script>
+<!-- //smoothscroll -->
+
+<!-- start-smooth-scrolling -->
+<script th:src="@{/js/move-top.js}"></script>
+<script th:src="@{/js/easing.js}"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 1000);
+        });
+    });
+</script>
+<!-- //end-smooth-scrolling -->
+
+<!-- smooth-scrolling-of-move-up -->
+<script>
+    $(document).ready(function () {
+        /*
+        var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+        };
+        */
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+
+    });
+</script>
+<!-- //smooth-scrolling-of-move-up -->
+
+<!-- for bootstrap working -->
+<script th:src="@{/js/bootstrap.js}"></script>
+<!-- //for bootstrap working -->
+<!-- //js-files -->
+</body>
+</html>

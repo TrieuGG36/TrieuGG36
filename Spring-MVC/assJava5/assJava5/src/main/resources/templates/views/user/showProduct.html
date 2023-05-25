@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EC Mobile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Grocery Shoppy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <link  th:href="@{/css/bootstrap.css}"   rel="stylesheet" type="text/css" media="all" />
+    <link  th:href="@{/css/style.css}" rel="stylesheet" type="text/css" media="all" />
+    <link   th:href="@{/css/font-awesome.css}"  rel="stylesheet">
+    <!--pop-up-box-->
+    <link th:href="@{/css/popuo-box.css}" rel="stylesheet" type="text/css" media="all" />
+    <!--//pop-up-box-->
+    <!-- price range -->
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/jquery-ui1.css}" >
+    <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css" media="screen" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+
+</head>
+<body>
+<div th:replace="/views/fragment/header :: header"></div>
+
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a th:href="@{http://localhost:8080/index}">Home</a>
+                    <i>|</i>
+                </li>
+                <li>Single Page</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="banner-bootom-w3-agileits">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">Single Page
+            <span class="heading-style">
+					<i></i>
+					<i></i>
+					<i></i>
+				</span>
+        </h3>
+        <!-- //tittle heading -->
+        <div class="col-md-5 single-right-left ">
+            <div class="grid images_3_of_2">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li data-thumb="images/si.jpg">
+                            <div class="thumb-image">
+                                <img th:src="@{${'/file/product/' + productMain.photo}}" data-imagezoom="true" class="img-responsive" alt="" > </div>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 single-right-left simpleCart_shelfItem">
+            <h3 th:text="${productMain.nameProduct}"></h3>
+            <div class="rating1" > <span>Product Rating</span>
+                <span class="starRating" th:if="${session.isEmpty()}">
+						<input id="rating5" type="radio" name="rating" value="5" disabled th:checked="${productMain.rate} == 5">
+						<label for="rating5">5</label>
+						<input id="rating4" type="radio" name="rating" value="4" disabled th:checked="${productMain.rate} == 4">
+						<label for="rating4">4</label>
+						<input id="rating3" type="radio" name="rating" value="3" disabled th:checked="${productMain.rate} == 3">
+						<label for="rating3">3</label>
+						<input id="rating2" type="radio" name="rating" value="2" disabled th:checked="${productMain.rate} == 2">
+						<label for="rating2">2</label>
+						<input id="rating1" type="radio" name="rating" value="1" disabled th:checked="${productMain.rate} == 1">
+						<label for="rating1">1</label>
+                </span>
+                <span class="starRating" th:if="${check} == false">
+						<input id="rating5" type="radio" name="rating" value="5" disabled th:checked="${productMain.rate} == 5">
+						<label for="rating5">5</label>
+						<input id="rating4" type="radio" name="rating" value="4" disabled th:checked="${productMain.rate} == 4">
+						<label for="rating4">4</label>
+						<input id="rating3" type="radio" name="rating" value="3" disabled th:checked="${productMain.rate} == 3">
+						<label for="rating3">3</label>
+						<input id="rating2" type="radio" name="rating" value="2" disabled th:checked="${productMain.rate} == 2">
+						<label for="rating2">2</label>
+						<input id="rating1" type="radio" name="rating" value="1" disabled th:checked="${productMain.rate} == 1">
+						<label for="rating1">1</label>
+                </span>
+            </div>
+
+            <p>
+                <span class="item_price" th:text="${ '$' + productMain.price}"></span>
+                <label>Free delivery</label>
+            </p>
+            <div class="single-infoagile">
+                <ul>
+                    <li>
+                        Cash on Delivery Eligible.
+                    </li>
+                    <li>
+                        Shipping Speed to Delivery.
+                    </li>
+                    <li>
+                        Sold and fulfilled by Supple Tek .
+                    </li>
+
+                </ul>
+            </div>
+            <div class="product-single-w3l">
+                <p>
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>This is a
+                    <label>GOOD</label> product.</p>
+
+                <p>
+                    <i class="fa fa-refresh" aria-hidden="true"></i>All food products are
+                    <label>non-returnable.</label>
+                </p>
+            </div>
+            <div class="occasion-cart">
+                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                    <input type="submit" name="submit" value="Add to cart" class="button" th:onclick="'addToCart(' + ${productMain.id} + ')'"/>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="clearfix"> </div>
+<!--        comment-->
+        <section class="content-item" style="margin-left: 250px;" id="comments">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8" id="chaComment">
+                            <div id="comment"  th:if="${check} == true">
+                                <h3 class="pull-left" >New Comment</h3>
+                                <br>  <br>
+                                <br>
+                                <div class="rating2 ">
+                                    <span style="margin-right: 30px">Your Rating</span>
+                                    <span class="starRating2">
+                                            <input id="rating5" type="radio" name="rating" value="5">
+                                            <label for="rating5">5</label>
+                                            <input id="rating4" type="radio" name="rating" value="4">
+                                            <label for="rating4">4</label>
+                                            <input id="rating3" type="radio" name="rating" value="3">
+                                            <label for="rating3">3</label>
+                                            <input id="rating2" type="radio" name="rating" value="2">
+                                            <label for="rating2">2</label>
+                                            <input id="rating1" type="radio" name="rating" value="1">
+                                            <label for="rating1">1</label>
+                                        </span>
+                                </div>
+                                <br>
+                                <fieldset >
+                                    <div class="row">
+                                        <div class="col-sm-3 col-lg-2 hidden-xs">
+                                            <h3 class="pull-left">Enter a comment : </h3>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                            <textarea class="form-control" id="cmt1" placeholder="Your message" required=""></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-normal pull-right" th:onclick="'addCmt(' + ${productMain.id} + ')'">Submit</button>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+
+
+
+                        <div id="cmt">
+                            <h3 id="count" th:text="${countComment} + ' Comments'"></h3>
+                            <!-- COMMENT 1 - START -->
+                            <th:block th:each="comment : ${commentList}">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4 class="media-heading" th:text="${comment.customer.fullname}"></h4>
+                                        <p th:text="${comment.nd}"></p>
+                                        <ul class="list-unstyled list-inline media-detail pull-left">
+                                            <i class="fa fa-calendar"></i><li th:text=" ${comment.createDate}"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                        <!-- COMMENT 1 - END -->
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!--        end comment-->
+    </div>
+</div>
+<!-- special offers -->
+<div class="featured-section" id="projects">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">Parity Product
+            <span class="heading-style">
+					<i></i>
+					<i></i>
+					<i></i>
+				</span>
+        </h3>
+        <!-- //tittle heading -->
+        <div class="content-bottom-in">
+            <ul id="flexiselDemo1">
+                <th:block th:each="product : ${listProduct}">
+                    <li>
+                        <div class="w3l-specilamk">
+                            <div class="speioffer-agile">
+                                <a th:href="@{'/product/' + ${product.id}}">
+                                    <img th:src="@{${'/file/product/' + product.photo}}" alt="" width="100px" height="100px">
+                                </a>
+                            </div>
+                            <div class="product-name-w3l">
+                                <h4>
+                                    <a th:href="@{'/product/' + ${product.id}}" th:text="${product.nameProduct}"></a>
+                                </h4>
+                                <div class="w3l-pricehkj">
+                                    <h6 th:text="'$' + ${product.price}"></h6>
+                                    <p th:text="${'Quantity :' + product.quantity}"></p>
+                                </div>
+                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                    <input type="submit" name="submit" value="Add to cart" class="button" th:onclick="'addToCart(' + ${product.id} + ')'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</div>
+<p hidden id="user" th:if="${ session.isEmpty() == false}" th:text="${session.currentUser.fullname}"></p>
+<!-- //special offers -->
+<!-- newsletter -->
+
+<div th:replace="/views/fragment/footer :: footer"></div>
+<!-- js-files -->
+<!-- jquery -->
+<script th:src="@{/js/jquery-2.1.4.min.js}"></script>
+<!-- //jquery -->
+
+<!-- popup modal (for signin & signup)-->
+<script th:src="@{/js/jquery.magnific-popup.js}"></script>
+<script>
+    $(document).ready(function () {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+            fixedContentPos: false,
+            fixedBgPos: true,
+            overflowY: 'auto',
+            closeBtnInside: true,
+            preloader: false,
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+    });
+</script>
+<!-- Large modal -->
+<!-- <script>
+    $('#').modal('show');
+</script> -->
+<!-- //popup modal (for signin & signup)-->
+
+<!-- cart-js -->
+<script th:src="@{/js/minicart.js}"></script>
+<script>
+    paypalm.minicartk.render(); //use only unique class names other than paypal1.minicart1.Also Replace same class name in css and minicart.min.js
+
+    paypalm.minicartk.cart.on('checkout', function (evt) {
+        var items = this.items(),
+            len = items.length,
+            total = 0,
+            i;
+
+        // Count the number of each item in the cart
+        for (i = 0; i < len; i++) {
+            total += items[i].get('quantity');
+        }
+
+        if (total < 3) {
+            alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+            evt.preventDefault();
+        }
+    });
+</script>
+<!-- //cart-js -->
+
+<!-- password-script -->
+<script>
+    window.onload = function () {
+        document.getElementById("password1").onchange = validatePassword;
+        document.getElementById("password2").onchange = validatePassword;
+    }
+
+    function validatePassword() {
+        var pass2 = document.getElementById("password2").value;
+        var pass1 = document.getElementById("password1").value;
+        if (pass1 != pass2)
+            document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+        else
+            document.getElementById("password2").setCustomValidity('');
+        //empty string means no validation error
+    }
+</script>
+<!-- //password-script -->
+
+<!-- smoothscroll -->
+<script th:src="@{/js/SmoothScroll.min.js}"></script>
+<!-- //smoothscroll -->
+
+<!-- start-smooth-scrolling -->
+<script th:src="@{/js/move-top.js}"></script>
+<script th:src="@{/js/easing.js}"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 1000);
+        });
+    });
+</script>
+<!-- //end-smooth-scrolling -->
+
+<!-- smooth-scrolling-of-move-up -->
+<script>
+    $(document).ready(function () {
+        /*
+        var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+        };
+        */
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+
+    });
+</script>
+<!-- //smooth-scrolling-of-move-up -->
+
+<!-- imagezoom -->
+<script th:src="@{/js/imagezoom.js}"></script>
+<!-- //imagezoom -->
+
+<!-- FlexSlider -->
+<script th:src="@{/js/jquery.flexslider.js}"></script>
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>
+<!-- //FlexSlider-->
+
+<!-- flexisel (for special offers) -->
+<script th:src="@{/js/jquery.flexisel.js}"></script>
+
+<script>
+    $(window).load(function () {
+        $("#flexiselDemo1").flexisel({
+            visibleItems: 3,
+            animationSpeed: 1000,
+            autoPlay: true,
+            autoPlaySpeed: 3000,
+            pauseOnHover: true,
+            enableResponsiveBreakpoints: true,
+            responsiveBreakpoints: {
+                portrait: {
+                    changePoint: 480,
+                    visibleItems: 1
+                },
+                landscape: {
+                    changePoint: 640,
+                    visibleItems: 2
+                },
+                tablet: {
+                    changePoint: 768,
+                    visibleItems: 2
+                }
+            }
+        });
+
+    });
+</script>
+<!-- //flexisel (for special offers) -->
+<script>
+    function addToCart(id) {
+        $.ajax({
+            url: 'http://localhost:8080/card/add/'+id
+        }).then(function (data) {
+
+        }).fail(function (error) {
+
+        });
+    }
+</script>
+
+<script>
+    function addCmt(id) {
+        var rating = 0;
+        if(document.getElementById("rating5").checked){
+            rating = 5;
+        }else if (document.getElementById("rating4").checked){
+            rating = 4;
+        }else if(document.getElementById("rating3").checked){
+            rating = 3;
+        }else if(document.getElementById("rating2").checked){
+            rating = 2;
+        }else if(document.getElementById("rating1").checked){
+            rating = 1;
+        }
+
+        if(rating === 0){
+            alert("Please choose rating");
+            return;
+        }
+
+
+
+        var nd1 = document.getElementById("cmt1").value;
+        var currentdate = new Date();
+        var datetime = currentdate.getDate() + "-"
+            + (currentdate.getMonth()+1)  + "-"
+            + currentdate.getFullYear();
+        if(nd1.length == 0){
+            alert("Đánh giá  không được để trống");
+            return;
+        }
+        var formData = {
+            'nd' : $('#cmt1').val(),
+            'rate' : rating
+        };
+        $.ajax({
+            url: 'http://localhost:8080/addcmt/'+id,
+            type:  'GET',
+            data : formData
+        }).then(function (data) {
+
+        }).fail(function (error) {
+            alert("Đánh giá thành công");
+            document.getElementById("cmt").innerHTML += '<div class="media">\n' +
+                '                                <div class="media-body">\n' +
+                '                                    <h4 class="media-heading">  '+ document.getElementById("user").innerHTML + '</h4>\n' +
+                '                                    <p>' + nd1 +'</p>\n'+
+                '                                    <ul class="list-unstyled list-inline media-detail pull-left">\n' +
+                '                                        <li><i class="fa fa-calendar"></i> '+ datetime + '</li>\n' +
+                '                                    </ul>\n' +
+                '                                </div>\n' +
+                '                            </div>';
+            var parent = document.getElementById("chaComment");
+            var child = document.getElementById("comment");
+            parent.removeChild(child);
+            var count = parseInt(document.getElementById("count").innerText.charAt(0) , 10) + 1;
+            document.getElementById("count").innerHTML = count + ' Comments';
+
+        });
+    };
+</script>
+<!-- for bootstrap working -->
+<script th:src="@{/js/bootstrap.js}" ></script>
+
+<style type="text/css">
+    body{margin-top:20px;}
+
+    .content-item {
+        padding:30px 0;
+        background-color:#FFFFFF;
+    }
+
+    .content-item.grey {
+        background-color:#F0F0F0;
+        padding:50px 0;
+        height:100%;
+    }
+
+    .content-item h2 {
+        font-weight:700;
+        font-size:35px;
+        line-height:45px;
+        text-transform:uppercase;
+        margin:20px 0;
+    }
+
+    .content-item h3 {
+        font-weight:400;
+        font-size:20px;
+        color:#555555;
+        margin:10px 0 15px;
+        padding:0;
+    }
+
+    .content-headline {
+        height:1px;
+        text-align:center;
+        margin:20px 0 70px;
+    }
+
+    .content-headline h2 {
+        background-color:#FFFFFF;
+        display:inline-block;
+        margin:-20px auto 0;
+        padding:0 20px;
+    }
+
+    .grey .content-headline h2 {
+        background-color:#F0F0F0;
+    }
+
+    .content-headline h3 {
+        font-size:14px;
+        color:#AAAAAA;
+        display:block;
+    }
+
+
+    #comments {
+        box-shadow: 0 -1px 6px 1px rgba(0,0,0,0.1);
+        background-color:#FFFFFF;
+    }
+
+    #comments form {
+        margin-bottom:30px;
+    }
+
+    #comments .btn {
+        margin-top:7px;
+    }
+
+    #comments form fieldset {
+        clear:both;
+    }
+
+    #comments form textarea {
+        height:100px;
+    }
+
+    #comments .media {
+        border-top:1px dashed #DDDDDD;
+        padding:20px 0;
+        margin:0;
+    }
+
+    #comments .media > .pull-left {
+        margin-right:20px;
+    }
+
+    #comments .media img {
+        max-width:100px;
+    }
+
+    #comments .media h4 {
+        margin:0 0 10px;
+    }
+
+    #comments .media h4 span {
+        font-size:14px;
+        float:right;
+        color:#999999;
+    }
+
+    #comments .media p {
+        margin-bottom:15px;
+        text-align:justify;
+    }
+
+    #comments .media-detail {
+        margin:0;
+    }
+
+    #comments .media-detail li {
+        color:#AAAAAA;
+        font-size:12px;
+        padding-right: 10px;
+        font-weight:600;
+    }
+
+    #comments .media-detail a:hover {
+        text-decoration:underline;
+    }
+
+    #comments .media-detail li:last-child {
+        padding-right:0;
+    }
+
+    #comments .media-detail li i {
+        color:#666666;
+        font-size:15px;
+        margin-right:10px;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>

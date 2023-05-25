@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EC Mobile Admin</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" th:href="@{/teamplates/admin/plugins/fontawesome-free/css/all.min.css}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" th:href="@{/teamplates/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/teamplates/admin/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
+
+    <div th:replace="/views/fragment/headerAdmin :: header">
+
+    </div>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Danh sach users</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="admin/user">Home</a></li>
+                            <li class="breadcrumb-item active">Danh sach users</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="card">
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>FullName</th>
+                            <th>Email</th>
+                            <th>admin</th>
+                            <th>Photo</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each = "user : ${listUser}">
+                            <tr>
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.fullname}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.role} ? 'Admin' : 'User' "></td>
+                                <td><img th:src="@{'/file/user/' + ${user.photo}}" width="50px" height="50px"> </td>
+                                <td>
+                                    <a
+                                            class="btn btn-primary"
+                                            th:href="@{'http://localhost:8080/admin/user?action=edit&id=' + ${user.id}}">Update</a>
+                                </td>
+                                <td>
+                                    <form th:action="@{'http://localhost:8080/admin/user/delete/'+ ${user.getId()}} " method="POST">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </th:block>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div >
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" th:href="@{?page={page}(page=${page} - 1 < 0 ? '0' : ${page} - 1)}">Previous</a></li>
+                        <li class="page-item"><a class="page-link" th:href="@{?page={page}(page=${page} + 1 > ${max} ? '0' : ${page} + 1)}">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+<!--         /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 3.1.0
+        </div>
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script th:src="@{/teamplates/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/teamplates/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- overlayScrollbars -->
+<script th:src="@{/teamplates/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/teamplates/admin/dist/js/adminlte.js}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script th:src="@{/teamplates/admin/plugins/jquery-mousewheel/jquery.mousewheel.js}"></script>
+<script th:src="@{/teamplates/admin/plugins/raphael/raphael.min.js}"></script>
+<script th:src="@{/teamplates/admin/plugins/jquery-mapael/jquery.mapael.min.js}"></script>
+<script th:src="@{/teamplates/admin/plugins/jquery-mapael/maps/usa_states.min.js}"></script>
+<!-- ChartJS -->
+<script th:src="@{/teamplates/admin/plugins/chart.js/Chart.min.js}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{/teamplates/admin/dist/js/demo.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script th:src="@{/teamplates/admin/dist/js/pages/dashboard2.js}"></script>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    });
+</script>
+<script>
+    function deleteUser(id) {
+        $.ajax({
+            url: '/baitapcuoi_war_exploded/admin/user?action=delete&id='+id
+
+        }).then(function (data) {
+            window.location.href = "http://localhost:8080/baitapcuoi_war_exploded/admin/user?action=view";
+        }).fail(function (error) {
+            alert("Oops! Please, try agains");
+        });
+    };
+</script>
+
+</body>
+</html>
